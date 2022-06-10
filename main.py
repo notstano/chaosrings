@@ -3,10 +3,13 @@ import io
 import streamlit as st
 from PIL import Image
 
-img1 = st.file_uploader(label='Background (original avatar) - a normal image file')
+img1 = st.file_uploader(label='Background (original avatar) - a normal image file',
+                        help='Supports Square, Portrait and Landscape orientation - the top image is centered above '
+                             'the background.')
 '---'
 img2 = st.file_uploader(label='Overlay (chaos ring) - an image with transparency to be superimposed on '
-                              '(put above) the background')
+                              '(put above) the background',
+                        help='This image should support transparency to be used as a top layer. Try using a png file.')
 '---'
 
 if img1 and img2:
@@ -30,9 +33,9 @@ if img1 and img2:
     st.image(img1)
 
     buffer = io.BytesIO()
-    img1.save(buffer, format='JPEG')
+    img1.save(buffer, format=img1.format)
 
     st.download_button(label='Download new avatar',
                        data=buffer.getvalue(),
-                       file_name=f'new_avatar.jpeg',
-                       mime='image/jpeg')
+                       file_name=f'new_avatar.{img1.format.lower()}',
+                       mime=f'image/{img1.format.lower()}')
