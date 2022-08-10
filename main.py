@@ -13,8 +13,8 @@ img2 = st.file_uploader(label='Overlay (chaos ring) - an image with transparency
 '---'
 
 if img1 and img2:
-    img1 = Image.open(img1)
-    img2 = Image.open(img2)
+    img1 = Image.open(img1).convert("RGBA")
+    img2 = Image.open(img2).convert("RGBA")
     if img2.format != 'PNG':
         st.warning(
             'The overlay image should be in a format that supports transparent parts (e.g. png) in order to be drawn'
